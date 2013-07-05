@@ -3,9 +3,11 @@ Pixelpusher Queue
 
 This Processing 2.0 app allows to show simple moving images in multiple layers for Pixelpushers. It reads the image data in an array to save time in the scraping process. We had some problems with not so powerfull computers to look for something less ressource hungry.
 
+If no Pixelpusher with strips are found, the app will display a rendering. But note: The rendering won't be shown with a present pixelpusher to save resources!
 
-Easy Explanation:
------------------
+
+Explanation:
+------------
 Just set your canvas size in the main file and edit queue.txt. Each line represents a single animation which will be queued. The syntax for each line is as follows:
 duration#image1.png,moveX,moveY,moveMode;image2.png,moveX,moveY,moveMode;imageX.png,moveX,moveY,moveMode;
 
@@ -22,6 +24,24 @@ examples:
 
 Note on the canvas:
 The canvas is thought of being in a zig-zag order. 
+
+
+Text-Rendering:
+---------------
+If you just want to render text in an layer, you can do this by replacing the filename of the image..
+txt$text to be written$r*g*b$fontsize$fontname$y
+1   2                  3     4        5        6
+
+1: identifier must be "txt" to enable text rendering
+2: String you want to display (Some forbidden characters are "#",";" and ",")
+3: colors red,green,blue, seperated by an "*"
+4: fontsize in pixels
+5: fontname can be either an Processing compatible name like "Arial-Regular", or an Processing-Font-File "fontname.vlw". The latter can be created with Processing under Tools->"Create Font..."
+6: the y-offset
+
+examples (whole line for queue):
+- 500#txt$ Dynamic Text $255*255*255$18$Arial-Bold$-1,0.8,0,bounce;rainbow_v.png,0,0.4,endless
+- 500#txt$ Dynamic Textfile $0*0*0$16$Default.vlw$4,0.8,0,bounce;fire.png,0.5,0.1,endless
 
 
 File purposes:
@@ -51,3 +71,13 @@ Copyright:
 There is none! Use it, copy it, improve it, make the worst and best out of it.
 Written by @peterkling, powered by @LukeSIX
 
+
+Version History:
+----------------
+
+0.2:
+- Simulation Mode
+- Dynamic Text Rendering
+
+0.1:
+- Basic Functionality, queued Parallax images
