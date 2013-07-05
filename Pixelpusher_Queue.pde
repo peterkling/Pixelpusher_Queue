@@ -20,6 +20,9 @@ import java.util.*;
 int canvas_cols = 60; // breite des boards
 int canvas_rows = 20; // höhe des boards (wird für bounce modus gebraucht)
 
+// simulate
+int simulate_scale = 10;
+Boolean try_to_simulate = true;
 
 // OBSERVER
 // #######################################################
@@ -42,7 +45,11 @@ void setup() {
   testObserver = new TestObserver();
   registry.addObserver(testObserver);
   colorMode(HSB, 360, 100, 100);
-  size(1, 1);
+  if (try_to_simulate) {
+    size(canvas_cols*simulate_scale, canvas_rows*simulate_scale);
+  } else {
+    size(1,1);
+  }
   
   String lines[] = loadStrings("queue.txt");
   for (int i = 0 ; i < lines.length; i++) {

@@ -138,6 +138,23 @@ class Parallax {
         }
   }
 }
+  public void simulate() {
+    color c = color(0,0,0,0);
+    doMove();
+    for (int y = 0; y < canvas_rows; y++) {
+      for (int x = 0; x < canvas_cols; x++) {
+        
+        int i = 0;
+        c = color(0,0,0,0);
+        while (alpha(c) == 0) {
+          c = images[i].getMovedPixel(x,y);
+          i++;
+        }
+        fill(c);
+        rect(x*simulate_scale,y*simulate_scale,simulate_scale,simulate_scale);
+      }
+    }
+  }
 }
 
 

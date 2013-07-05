@@ -24,7 +24,15 @@ class ImageArray {
     ImageArray(String filename, int cols, int rows) {
       canvas_cols = cols;
       canvas_rows = rows;
-      paint(filename);
+
+      String filename_config[] = split(filename,"$");
+      if (filename_config[0].equals("img")) {
+        paint_image(filename_config[1]);
+      } else if (filename_config[0].equals("txt")) {
+        paint_text(filename_config);
+      } else {
+        paint_image(filename);
+      }
     }
     
     // ###########################################################
@@ -37,7 +45,7 @@ class ImageArray {
 
 
     // load image
-    private void paint(String filename) {
+    private void paint_image(String filename) {
       PImage img = loadImage("images/"+filename);
       src_cols = img.width;
       src_rows = img.height;
@@ -59,6 +67,86 @@ class ImageArray {
           myCanvas[j][i] = img.get(j, i);
         }
       }
+    }
+    
+    
+    // paint with text
+    // txt$text to be written$r*g*b$textsize$fontname$y
+    // 0   1                  2     3        4        5                
+    private void paint_text(String text_config[]) {
+      // get settings
+      String txt = text_config[1];
+      
+      String colorstr;
+      if (text_config.length > 2 && !text_config[2].equals("")) {
+        colorstr = text_config[2];
+      } else {
+        colorstr = "255*255*255";
+      }
+      colorMode(RGB, 255);
+      String colors[] = split(colorstr,"*");
+      
+      int textsize;
+      if (text_config.length > 3 && !text_config[3].equals("")) {
+        textsize = int(text_config[3]);
+      } else {
+        textsize = 16;
+      }
+      
+      String fontname;
+      PFont font = createFont("",textsize);
+      if (text_config.length > 4 && !text_config[4].equals("")) {
+        fontname = text_config[4];
+        String fontname_parts[] = split(fontname,".");
+        if (fontname_parts.length > 1 && fontname_parts[1].equals("vlw")) {
+          font = loadFont(fontname);
+        } else {
+          font = createFont(fontname,textsize,false);
+        }
+        textFont(font);
+      } else {
+        fontname = ""; 
+      }
+      textSize(textsize);
+      
+      int y;
+      if (text_config.length > 5 && !text_config[5].equals("")) {
+        y = int(text_config[5]);
+      } else {
+        y = 4;
+      }
+      
+     println(txt+" $ "+colorstr+" $ "+textsize+" $ "+fontname+" $ "+y);
+
+      // get & set size
+      int build_cols = ceil(textWidth(txt));
+      if (build_cols < canvas_cols) 
+        build_cols = canvas_cols;
+      
+      
+      // write text
+      PGraphics pg = createGraphics(build_cols, canvas_rows);
+      pg.beginDraw();
+      if (!fontname.equals("")) pg.textFont(font);
+      pg.textSize(textsize);
+      pg.fill(int(colors[0]),int(colors[1]),int(colors[2]));
+      pg.text(txt,0,y,build_cols,canvas_rows*2);
+      pg.endDraw();
+      
+      // set src dimension
+      src_cols = pg.width;
+      src_rows = pg.height;
+      
+      // create canvas
+      myCanvas = new int[build_cols][canvas_rows];
+
+      for (int i = 0; i < src_rows; i++) {
+        for (int j = 0; j < src_cols; j++) {
+          myCanvas[j][i] = pg.get(j, i);
+        }
+      }
+      
+      goffsetY = 1;
     }
     
     // get pixel

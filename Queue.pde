@@ -53,7 +53,11 @@ class ParallaxQueue {
   public void draw(DeviceRegistry registry, TestObserver testObserver) {
     //println(queue_cnt+" "+ play_pointer+" "+ play_cnt);
     if (queue_cnt > 0) {
-      queue[play_pointer].draw(registry, testObserver);
+      if (testObserver.hasStrips) {   
+        queue[play_pointer].draw(registry, testObserver);
+      } else if (try_to_simulate) {
+        queue[play_pointer].simulate();
+      }
       if(++play_cnt >= queue[play_pointer].playtime) {
         play_cnt = 0;
         if (++play_pointer >= queue_cnt) 
