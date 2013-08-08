@@ -12,6 +12,7 @@ import com.heroicrobot.dropbit.registry.*;
 import com.heroicrobot.dropbit.devices.pixelpusher.Pixel;
 import com.heroicrobot.dropbit.devices.pixelpusher.Strip;
 import java.util.*;
+import java.io.*;
 
 // CONFIG
 // #######################################################
@@ -21,7 +22,7 @@ int canvas_cols = 60; // breite des boards
 int canvas_rows = 20; // höhe des boards (wird für bounce modus gebraucht)
 
 // simulate
-int simulate_scale = 10;
+int simulate_scale = 20;
 Boolean try_to_simulate = true;
 
 // OBSERVER
@@ -34,7 +35,21 @@ TestObserver testObserver;
 // VARS
 // #######################################################
 
-ParallaxQueue queue = new ParallaxQueue(canvas_cols, canvas_rows);
+ParallaxQueue queue = new ParallaxQueue(canvas_cols, canvas_rows, "queue.txt");
+long lastTimestamp = 0;
+String[][] backgrounds = {
+    {"rainbow_v.png,0,0.4,endless","255*255*255"},
+    {"rainbow.png,-0.4,0,endless","0*0*0"},
+    {"fire.png,0.5,0.1,endless","255*255*255"},
+    {"rain_1.png,0.2,-1.5,endless;rain_2.png,0.1,-0.3,endless","255*255*255"},
+    {"welle_1.png,-1,0,endless;welle_2.png,-0.8,0,endless;welle_3.png,-0.4,0,endless","255*255*255"},
+    {"cloud_2.png,-0.8,0,endless;cloud_3.png,-0.4,0,endless;cloud_4.png,0,0,endless","0*0*0"}
+  };
+String[] fonts = {
+    "SonsieOne-Regular-16.vlw",
+    "OCRAStd-16.vlw",
+    "StencilStd-16.vlw"
+  };
 
 
 // SETUP
@@ -51,10 +66,8 @@ void setup() {
     size(1,1);
   }
   
-  String lines[] = loadStrings("queue.txt");
-  for (int i = 0 ; i < lines.length; i++) {
-    queue.addParallax(lines[i]);
-  }
+  queue.loadQueue();
+  
 }
 
 // DRAW

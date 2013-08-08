@@ -116,7 +116,7 @@ class ImageArray {
         y = 4;
       }
       
-     println(txt+" $ "+colorstr+" $ "+textsize+" $ "+fontname+" $ "+y);
+     //println(txt+" $ "+colorstr+" $ "+textsize+" $ "+fontname+" $ "+y);
 
       // get & set size
       int build_cols = ceil(textWidth(txt));
@@ -146,7 +146,6 @@ class ImageArray {
         }
       }
       
-      goffsetY = 1;
     }
     
     // get pixel
@@ -168,7 +167,7 @@ class ImageArray {
       
     
       int y2;
-      offsetY = offsetY % src_rows -1;
+      offsetY = offsetY % src_rows;
       if (y+offsetY >= src_rows) {
         y2 = y + offsetY - src_rows;
       } else if (y+offsetY < 0) {

@@ -41,7 +41,7 @@ class ParallaxImage {
 
 class Parallax {
  
- ParallaxImage images[] = new ParallaxImage[5]; 
+ ParallaxImage images[] = new ParallaxImage[10]; 
  
  private int image_cnt = 0;
  
@@ -129,7 +129,7 @@ class Parallax {
             y = basey;
             int i = 0;
             c = color(0,0,0,0);
-            while (alpha(c) == 0) {
+            while (alpha(c) == 0 && i < image_cnt) {
               c = images[i].getMovedPixel(x,y);
               i++;
             }
@@ -147,7 +147,11 @@ class Parallax {
         int i = 0;
         c = color(0,0,0,0);
         while (alpha(c) == 0) {
-          c = images[i].getMovedPixel(x,y);
+          if (i < image_cnt) {
+            c = images[i].getMovedPixel(x,y);
+          } else {
+            c = color(0,0,0);
+          }
           i++;
         }
         fill(c);
