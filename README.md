@@ -28,20 +28,36 @@ The canvas is thought of being in a zig-zag order.
 
 Text-Rendering:
 ---------------
-If you just want to render text in an layer, you can do this by replacing the filename of the image..
-txt$text to be written$r*g*b$fontsize$fontname$y
-1   2                  3     4        5        6
 
-1: identifier must be "txt" to enable text rendering
-2: String you want to display (Some forbidden characters are "#",";" and ",")
-3: colors red,green,blue, seperated by an "*"
-4: fontsize in pixels
-5: fontname can be either an Processing compatible name like "Arial-Regular", or an Processing-Font-File "fontname.vlw". The latter can be created with Processing under Tools->"Create Font..."
-6: the y-offset
+CUSTOM CONFIGURATION (type = "c"):
+If you just want to render text in an layer, you can do this by replacing the filename of the image..
+c#500#txt$text to be written$r*g*b$fontsize$fontname$y
+1 2   3   4                  5     6        7        8
+
+1: type of entry (must be "c" for custom configuration)
+2: duration in frames
+3: identifier must be "txt" to enable text rendering
+4: String you want to display (Some forbidden characters are "#",";" and ",")
+5: colors red,green,blue, seperated by an "*"
+6: fontsize in pixels
+7: fontname can be either an Processing compatible name like "Arial-Regular", or an Processing-Font-File "fontname.vlw". The latter can be created with Processing under Tools->"Create Font..."
+8: the y-offset
 
 examples (whole line for queue):
 - 500#txt$ Dynamic Text $255*255*255$18$Arial-Bold$-1,0.8,0,bounce;rainbow_v.png,0,0.4,endless
 - 500#txt$ Dynamic Textfile $0*0*0$16$Default.vlw$4,0.8,0,bounce;fire.png,0.5,0.1,endless
+
+QUICK TEXT (type = "t"):
+This type will choose random font & color to the given text.
+
+t#500#text to be written
+1 2   3                 
+
+1: type of entry (must be "c" for custom configuration)
+2: duration in frames
+3: String you want to display (Some forbidden characters are "#",";" and ",")
+
+
 
 
 File purposes:
@@ -74,6 +90,12 @@ Written by @peterkling, powered by @LukeSIX
 
 Version History:
 ----------------
+
+0.3:
+- Queue Autoreload
+- Quick Text
+- WARNING: SYNTAX CHANGED A BIT, OLD queue.txt WON'T WORK (just put "c#" in front of each your old lines and it should work again)
+- The readme got written weeks later, so I hope everything is correct about the changes :)
 
 0.2:
 - Simulation Mode
