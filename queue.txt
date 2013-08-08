@@ -1,4 +1,2 @@
-500#txt$ Dynamic Text $255*255*255$18$Arial-Bold$-1,0.8,0,bounce;rainbow_v.png,0,0.4,endless
-500#txt$ Dynamic Textfile $0*0*0$16$Default.vlw$4,0.8,0,bounce;fire.png,0.5,0.1,endless
-500#alpha_nowhere.png,0.5,0,endless;rainbow.png,-0.4,0,endless
-500#img$alpha_nowhere_w.png,0.5,0,bounce;fire.png,0.5,1,endless
+t#360#
+t#360#Nowhere 2013
