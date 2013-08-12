@@ -49,8 +49,20 @@ class ParallaxQueue {
       parallax.addImages(parameters[2]);
     } else if (parameters[0].equals("t")) {
       Random random = new Random();
-      String[] background = backgrounds[random.nextInt(backgrounds.length)];
-      String font = fonts[random.nextInt(fonts.length)];
+      int bg_id = 0;
+      if (parameters.length > 3) {
+        bg_id = int(parameters[3]);
+      } else {
+        bg_id = random.nextInt(backgrounds.length);
+      }
+      int font_id = 0;
+      if (parameters.length > 4) {
+        font_id = int(parameters[4]);
+      } else {
+        font_id = random.nextInt(fonts.length);
+      }
+      String[] background = backgrounds[bg_id];
+      String font = fonts[font_id];
       parallax.addImage("txt$ "+parameters[2]+" $"+background[1]+"$16$"+font+"$3,0.5,0,endless");
       if (background[0] != "") parallax.addImages(background[0]);  
     }
